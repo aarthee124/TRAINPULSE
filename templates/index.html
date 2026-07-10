@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RailPulse Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="page-index">
+    <div class="container">
+        <div class="page-box">
+            <h1>🚂 RailPulse Live Train Tracker</h1>
+            <p class="subtitle">Real-time status, delays, route details and station updates</p>
+
+            <div class="card card-form">
+                <form action="/verify" method="get">
+                    <label>TRAIN NUMBER</label>
+                    <select name="train_no" class="input-field" required>
+                        <option value="">Select train number</option>
+                        {% for train_no, train_name in available_trains %}
+                        <option value="{{ train_no }}">{{ train_no }} — {{ train_name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label>JOURNEY DATE</label>
+                    <select name="departure" class="input-field">
+                        <option value="Today">Today</option>
+                        <option value="Tomorrow" selected>Tomorrow</option>
+                    </select>
+
+                    <label>STATION CODE</label>
+                    <select name="destination" class="input-field">
+                        <option value="Tirupparankundram" selected>Tirupparankundram (TDN)</option>
+                        
+                        <option value="Madurai">Madurai Junction (MDU)</option>
+                        <option value="Thirumangalam">Thirumangalam (TMM)</option>
+                        <option value="Solavanthan">Solavanthan (SLN)</option>
+                    </select>
+
+                    <button type="submit" class="btn-orange">🚆 TRACK TRAIN NOW</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <a href="/logout" class="btn-back">🚪 Logout</a>
+            </div>
+
+            {% if error %}
+            <div class="card card-error">
+                <strong>⚠️ {{ error }}</strong>
+            </div>
+            {% endif %}
+
+            <div class="card info-card">
+                <h3 class="section-title">Trains Ready for Live Tracking</h3>
+                <p>
+                    {% if available_trains %}
+                        {{ available_trains | map(attribute=0) | join(', ') }}
+                    {% else %}
+                        No trains available yet
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
