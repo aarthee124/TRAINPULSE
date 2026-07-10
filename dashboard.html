@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Train Status Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="page-dashboard">
+    <div class="container">
+        <div class="page-box">
+            <div class="top-row">
+                <div>
+                    <h1>🚆 Train Status Dashboard</h1>
+                    <p class="subtitle">Live update for {{ train.train_name }} ({{ train.train_no }})</p>
+                </div>
+                <div class="profile-chip">
+                    <span>Logged in as</span>
+                    <strong>{{ username }}</strong>
+                </div>
+            </div>
+
+            <div class="card card-blue">
+                <h3>Current Status</h3>
+                <div class="status-grid">
+                    <div class="status-card">
+                        <span>Route</span>
+                        <strong>{{ train.source }} → {{ train.destination }}</strong>
+                    </div>
+                    <div class="status-card">
+                        <span>Departure</span>
+                        <strong>{{ train.departure }}</strong>
+                    </div>
+                    <div class="status-card">
+                        <span>Arrival</span>
+                        <strong>{{ train.arrival }}</strong>
+                    </div>
+                    <div class="status-card">
+                        <span>Platform</span>
+                        <strong>{{ train.platform }}</strong>
+                    </div>
+                    <div class="status-card">
+                        <span>Live Location</span>
+                        <strong class="loc">{{ api_data.current_location }}</strong>
+                    </div>
+                    <div class="status-card">
+                        <span>Status</span>
+                        <strong class="status-ok">{{ api_data.status }}</strong>
+                    </div>
+                    <div class="status-card">
+                        <span>Estimated Delay / ETA</span>
+                        <strong>{{ api_data.delay }}</strong>
+                    </div>
+                </div>
+                <p class="api-note">{{ api_data.message }}</p>
+                <p class="api-note-small">Live API source: {{ api_info.source }} · Calls left: {{ api_info.calls_remaining }}</p>
+            </div>
+
+            <div class="card section-card">
+                <h3 class="section-title">Recent Train Updates</h3>
+                {% if history %}
+                    {% for item in history %}
+                    <div class="history-card">
+                        <div class="hist-left">
+                            <div class="history-title">{{ item[1] }} • {{ item[0] }}</div>
+                            <div><strong>Destination:</strong> {{ item[2] }}</div>
+                            <div class="dur">{{ item[5] }}</div>
+                        </div>
+                        <div class="hist-right">
+                            <div><strong>ETA:</strong> {{ item[3] }}</div>
+                            <div class="status-delay">{{ item[4] }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No history updates available.</p>
+                {% endif %}
+            </div>
+
+            <div class="card">
+                <a href="/" class="btn-back">← Back to Search</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

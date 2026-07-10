@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Travel Info</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="page-verify">
+    <div class="container">
+        <div class="page-box">
+            <h1 class="title-orange">Confirm Train Search</h1>
+
+            <div class="card card-blue">
+                <h3>🔒 Your Travel Details</h3>
+                <p>Review your selected train number, journey date, and station before viewing live status and route details.</p>
+                <p><strong>Target Train Number:</strong> {{ train_no }}</p>
+                <p><strong>Travel Commencement:</strong> {{ departure }}</p>
+                <p><strong>Terminal:</strong> {{ destination }}</p>
+            </div>
+
+            <div class="card">
+                <form action="/dashboard" method="get">
+                    <input type="hidden" name="train_no" value="{{ train_no }}">
+                    <input type="hidden" name="departure" value="{{ departure }}">
+                    <input type="hidden" name="destination" value="{{ destination }}">
+                    <button type="submit" class="btn-green">✅ AUTHORIZE FINAL STATUS REPORT →</button>
+                </form>
+                <a href="/" class="btn-back">← Back to Search</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
