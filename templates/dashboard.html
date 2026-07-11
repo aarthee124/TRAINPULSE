@@ -21,36 +21,62 @@
 
             <div class="card card-blue">
                 <h3>Current Status</h3>
+                {% if api_data.is_live %}
                 <div class="status-grid">
                     <div class="status-card">
                         <span>Route</span>
-                        <strong>{{ train.source }} → {{ train.destination }}</strong>
-                    </div>
-                    <div class="status-card">
-                        <span>Departure</span>
-                        <strong>{{ train.departure }}</strong>
-                    </div>
-                    <div class="status-card">
-                        <span>Arrival</span>
-                        <strong>{{ train.arrival }}</strong>
-                    </div>
-                    <div class="status-card">
-                        <span>Platform</span>
-                        <strong>{{ train.platform }}</strong>
+                        <strong>{{ api_data.route_source }} → {{ api_data.route_destination }}</strong>
                     </div>
                     <div class="status-card">
                         <span>Live Location</span>
-                        <strong class="loc">{{ train.current_location }}</strong>
+                        <strong class="loc">{{ api_data.current_location }}</strong>
                     </div>
                     <div class="status-card">
                         <span>Status</span>
-                        <strong class="status-ok">{{ train.status }}</strong>
+                        <strong class="status-ok">{{ api_data.status }}</strong>
                     </div>
                     <div class="status-card">
-                        <span>Estimated Delay / ETA</span>
-                        <strong>{{ train.eta }}</strong>
+                        <span>Estimated Delay</span>
+                        <strong>{{ api_data.delay }}</strong>
+                    </div>
+                    {% if api_data.next_halt %}
+                    <div class="status-card">
+                        <span>Next Halt</span>
+                        <strong>{{ api_data.next_halt }}</strong>
+                    </div>
+                    {% endif %}
+                    {% if api_data.previous_halt %}
+                    <div class="status-card">
+                        <span>Previous Halt</span>
+                        <strong>{{ api_data.previous_halt }}</strong>
+                    </div>
+                    {% endif %}
+                    {% if api_data.last_updated %}
+                    <div class="status-card">
+                        <span>Last Updated</span>
+                        <strong>{{ api_data.last_updated }}</strong>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="api-status-banner">
+                    <span>Live API status</span>
+                    <strong>LIVE</strong>
+                    <small>{{ api_data.message }} · Calls left: {{ api_info.calls_remaining }}</small>
+                </div>
+                {% else %}
+                <div class="status-grid">
+                    <div class="status-card">
+                        <span>Real-time data</span>
+                        <strong class="status-missing">Not available</strong>
                     </div>
                 </div>
+                <div class="api-status-banner">
+                    <span>Live API status</span>
+                    <strong>FALLBACK</strong>
+                    <small>{{ api_data.message }} · Calls left: {{ api_info.calls_remaining }}</small>
+                </div>
+                {% endif %}
+                <p class="api-note">The dashboard only displays live data; seeded/fake values are hidden.</p>
             </div>
 
             <div class="card section-card">

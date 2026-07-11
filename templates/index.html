@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,12 +29,8 @@
                     </select>
 
                     <label>STATION CODE</label>
-                    <select name="destination" class="input-field">
-                        <option value="Tirupparankundram" selected>Tirupparankundram (TDN)</option>
-                        
-                        <option value="Madurai">Madurai Junction (MDU)</option>
-                        <option value="Thirumangalam">Thirumangalam (TMM)</option>
-                        <option value="Solavanthan">Solavanthan (SLN)</option>
+                    <select name="destination" class="input-field" required>
+                        <option value="">Select a train first</option>
                     </select>
 
                     <button type="submit" class="btn-orange">🚆 TRACK TRAIN NOW</button>
@@ -62,5 +59,53 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const routeStations = {
+            "12693": [
+                { value: "TMM", label: "Thirumangalam (TMM)" },
+                { value: "MDU", label: "Madurai Junction (MDU)" }
+            ],
+            "12631": [
+                { value: "MDU", label: "Madurai Junction (MDU)" },
+                { value: "VPT", label: "Virudhunagar Junction (VPT)" }
+            ],
+            "12635": [
+                { value: "MAS", label: "Chennai Egmore (MAS)" },
+                { value: "MDU", label: "Madurai Junction (MDU)" }
+            ],
+            "12676": [
+                { value: "CBE", label: "Coimbatore Junction (CBE)" },
+                { value: "MAS", label: "Chennai Central (MAS)" }
+            ]
+        };
+
+        const trainSelect = document.querySelector('select[name="train_no"]');
+        const stationSelect = document.querySelector('select[name="destination"]');
+
+        function updateStationOptions() {
+            const trainNo = trainSelect.value;
+            const options = routeStations[trainNo] || [];
+
+            stationSelect.innerHTML = "";
+            if (!options.length) {
+                const placeholder = document.createElement('option');
+                placeholder.value = "";
+                placeholder.textContent = "Select a train first";
+                stationSelect.appendChild(placeholder);
+                return;
+            }
+
+            options.forEach((station) => {
+                const option = document.createElement('option');
+                option.value = station.value;
+                option.textContent = station.label;
+                stationSelect.appendChild(option);
+            });
+        }
+
+        trainSelect.addEventListener('change', updateStationOptions);
+        document.addEventListener('DOMContentLoaded', updateStationOptions);
+    </script>
 </body>
 </html>
