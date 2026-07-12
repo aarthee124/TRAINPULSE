@@ -239,6 +239,7 @@ def init_db():
 
     conn.commit()
     conn.close()
+    init_db()
 
 
 @app.route("/", methods=["GET"])
@@ -390,7 +391,3 @@ def dashboard():
         api_info=api_info,
         history=history,
         username=session.get("username")
-    )
-if __name__ == "__main__":
-    init_db()
-    app.run(debug=True, port=5000)
