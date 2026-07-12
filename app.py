@@ -390,4 +390,4 @@ def dashboard():
         api_data=api_data,
         api_info=api_info,
         history=history,
-        username=session.get("username")
+        username=session.get("username"))
