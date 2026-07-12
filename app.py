@@ -1,5 +1,4 @@
-from dotenv import load_dotenv
-load_dotenv()
+
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 import os
@@ -17,7 +16,7 @@ DB = "database.db"
 # CMD example:
 #   set TRAINPULSE_API_KEY=your_real_key_here
 #   set TRAINPULSE_API_SECRET=your_real_secret_here
-API_KEY = "rg_4126ef2bf26c45ea99bd35944f299460"
+API_KEY = "rg_c778e6583943451aba41f7dda8477be4"
   
 API_CALL_LIMIT = int(os.getenv("TRAINPULSE_API_CALL_LIMIT", os.getenv("API_CALL_LIMIT", "20")))
 # If a key is present, enable live API automatically unless explicitly disabled.
@@ -393,8 +392,3 @@ def dashboard():
         username=session.get("username")
     )
 
-
-
-if __name__ == "__main__":
-    init_db()
-    app.run(debug=True)
